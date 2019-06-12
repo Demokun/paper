@@ -1,6 +1,7 @@
 import  numpy as np
 import pandas as pd
 from pandas.core.frame import DataFrame
+from sklearn import preprocessing
 '''
 open data file
 '''
@@ -36,3 +37,16 @@ merge data and pairedData
 '''
 data = pd.concat([data,pairedData],axis = 1)
 data.columns = ['a','b','c','d']
+'''
+convert column"b"(ATGCTGCA...) to one-hot encoder
+'''
+encoder = preprocessing.OneHotEncoder(sparse = False).fit_transform(baseData[['b']])
+oneHotData = pd.DataFrame(encoder,columns = ['m','n','x','y'],dtype = np.int64)
+'''
+change the index from (0 to n) to (1 to n) 
+'''
+oneHotData.index+=1
+'''
+merge data and oneHotData
+'''
+data = pd.concat([data,oneHotData],axis = 1)
