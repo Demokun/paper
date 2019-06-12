@@ -46,7 +46,4 @@ oneHotData = pd.DataFrame(encoder,columns = ['m','n','x','y'],dtype = np.int64)
 change the index from (0 to n) to (1 to n) 
 '''
 oneHotData.index+=1
-'''
-merge data and oneHotData
-'''
-data = pd.concat([data,oneHotData],axis = 1)
+
