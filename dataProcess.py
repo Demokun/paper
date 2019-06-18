@@ -38,15 +38,16 @@ merge data and pairedData
 data = pd.concat([data,pairedData],axis = 1)
 data.columns = ['a','b','c','d']
 '''
-convert column"b"(ATGCTGCA...) to one-hot encoder
+add one-hot columns
 '''
-encoder = preprocessing.OneHotEncoder(sparse = False).fit_transform(baseData[['b']])
-oneHotData = pd.DataFrame(encoder,columns = ['m','n','x','y'],dtype = np.int64)
+data['m'] = 0
+data['n'] = 0
+data['x'] = 0
+data['y'] = 0
 '''
-change the index from (0 to n) to (1 to n) 
+one-hot encoder
 '''
-oneHotData.index+=1
-'''
-merge data and oneHotData
-'''
-data = pd.concat([data,oneHotData],axis = 1)
+data['m'].loc[data.b == 'A'] = 1
+data['n'].loc[data.b == 'U'] = 1
+data['x'].loc[data.b == 'G'] = 1
+data['y'].loc[data.b == 'C'] = 1
