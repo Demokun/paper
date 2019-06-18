@@ -5,7 +5,8 @@ from sklearn import preprocessing
 '''
 open data file
 '''
-pf = pd.read_table('D:/data/example.ct',names = ['a','b','c','d','e','f'],dtype = object)
+filePath = 'D:/data/example1.ct'
+pf = pd.read_table(filePath,names = ['a','b','c','d','e','f'],dtype = object)
 '''
 delete the first line
 select the "sequence"(a) column,the "base"(b) column and the "paired"(e) column 
@@ -13,7 +14,7 @@ select the "sequence"(a) column,the "base"(b) column and the "paired"(e) column
 pf = pf.drop(0)
 data = pd.DataFrame(pf,columns = ['a','b','e'])
 '''
-generate baseData(ATGCATCG.....)
+generate baseData(A T G C A T C G.....)
 '''
 baseData = pd.DataFrame(data,columns = ['b'])
 '''
@@ -51,3 +52,27 @@ data['m'].loc[data.b == 'A'] = 1
 data['n'].loc[data.b == 'U'] = 1
 data['x'].loc[data.b == 'G'] = 1
 data['y'].loc[data.b == 'C'] = 1
+'''
+data rows
+'''
+dataRows = data.shape[0]
+'''
+when rows < 300 ,padding  
+'''
+paddingRow = pd.DataFrame([[0,0,0,0,0,0,0,0]],columns = ['a','b','c','d','m','n','x','y'])
+while dataRows < 300:
+    data = data.append(paddingRow)
+    dataRows = data.shape[0]
+'''
+when rows > 300
+'''
+count = 0
+if (dataRows > 300):
+    while (dataRows - count * 100) > 300:
+        subData = data[count * 100:count * 100 + 300]
+        count += 1
+    resData = data[count * 300:dataRows]
+    resRows = resData.shape[0]
+    while resRows < 300:
+        resData  = resData.append(paddingRow,ignore_index = True)
+        resRows = resData.shape[0]
