@@ -59,10 +59,12 @@ dataRows = data.shape[0]
 '''
 when rows < 300 ,padding  
 '''
-paddingRow = pd.DataFrame([[0,0,0,0,0,0,0,0]],columns = ['a','b','c','d','m','n','x','y'])
+j = dataRows
 while dataRows < 300:
-    data = data.append(paddingRow)
+    paddingRow = pd.DataFrame([[j + 1 ,'N',0,0,0,0,0,0]],columns = ['a','b','c','d','m','n','x','y'])
+    data = data.append(paddingRow,ignore_index = True)
     dataRows = data.shape[0]
+    j = j + 1
 '''
 when rows > 300
 '''
@@ -73,6 +75,9 @@ if (dataRows > 300):
         count += 1
     resData = data[count * 300:dataRows]
     resRows = resData.shape[0]
+    i = dataRows
     while resRows < 300:
+        paddingRow = pd.DataFrame([[i + 1 ,'N',0,0,0,0,0,0]],columns = ['a','b','c','d','m','n','x','y'])
         resData  = resData.append(paddingRow,ignore_index = True)
         resRows = resData.shape[0]
+        i = i + 1
