@@ -34,8 +34,8 @@ def dataProcess(path):
     pairData = pd.DataFrame(data,columns = ['e'])
 
     '''
-    select values that ">"0 convert to 1
-    select values that "="0 convert to 0 from pairData(118,117,116,115,0,0,...) 
+    convert values that ">"0  to 1
+    convert values that "="0  to 0 from pairData(118,117,116,115,0,0,...) 
     and save to pairedData(1,1,1,1,0,0,...)
     '''
     def select(x):
