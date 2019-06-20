@@ -4,7 +4,6 @@ from pandas.core.frame import DataFrame
 from sklearn import preprocessing
 import os
 
-
 def dataProcess(path):
     '''
     open data file
@@ -35,8 +34,8 @@ def dataProcess(path):
     pairData = pd.DataFrame(data,columns = ['e'])
 
     '''
-    convert values that ">"0  to 1
-    convert values that "="0  to 0 from pairData(118,117,116,115,0,0,...) 
+    select values that ">"0 convert to 1
+    select values that "="0 convert to 0 from pairData(118,117,116,115,0,0,...) 
     and save to pairedData(1,1,1,1,0,0,...)
     '''
     def select(x):
@@ -62,14 +61,14 @@ def dataProcess(path):
     data['x'] = 0
 
     data['y'] = 0
-
     '''
+
     one-hot encoder
     '''
-    data['m'].loc[data.b == 'A'] = 1
-    data['n'].loc[data.b == 'U'] = 1
-    data['x'].loc[data.b == 'G'] = 1
-    data['y'].loc[data.b == 'C'] = 1
+    data.loc[data.b == 'A','m'] = 1
+    data.loc[data.b == 'U','n'] = 1
+    data.loc[data.b == 'G','x'] = 1
+    data.loc[data.b == 'C','y'] = 1
 
     '''
     data rows
@@ -110,8 +109,8 @@ def dataProcess(path):
 inputSet = pd.DataFrame(columns = ('a','b','c','d','m','n','x','y'))
 filePath = 'D:\data'
 for info in os.listdir(filePath):
-    domain = os.path.abspath(filePath) #文件路径'D:\\data'
-    info = os.path.join(domain,info)   #文件路径'D:\\data\\example.ct'
+    domain = os.path.abspath(filePath) #'D:\\data'
+    info = os.path.join(domain,info)   #'D:\\data\\example.ct'
     result = dataProcess(info)
     inputSet = pd.concat([inputSet,result],axis = 0,ignore_index = True)
-inputSet.to_excel('D:\data\data.xlsx')
+inputSet.to_excel('D:\data\data.xls',encoding = 'utf-8',index=False,header=False)
