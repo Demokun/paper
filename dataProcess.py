@@ -35,8 +35,8 @@ def dataProcess(path):
     pairData = pd.DataFrame(data,columns = ['e'])
 
     '''
-    select values that ">"0 convert to 1
-    select values that "="0 convert to 0 from pairData(118,117,116,115,0,0,...) 
+    convert values that ">"0  to 1
+    convert values that "="0  to 0 from pairData(118,117,116,115,0,0,...) 
     and save to pairedData(1,1,1,1,0,0,...)
     '''
     def select(x):
@@ -114,3 +114,4 @@ for info in os.listdir(filePath):
     info = os.path.join(domain,info)   #文件路径'D:\\data\\example.ct'
     result = dataProcess(info)
     inputSet = pd.concat([inputSet,result],axis = 0,ignore_index = True)
+inputSet.to_excel('D:\data\data.xlsx')
